@@ -15,7 +15,7 @@ typedef struct		s_list
 
 typedef struct		s_var
 {
-	short int		w;
+	short int		link;
 	short int		h;
 	short int		valid;
 	short int		tab[22];

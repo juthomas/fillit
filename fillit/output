@@ -1,0 +1,103 @@
+ok
+ok
+ok
+ok0
+ok
+var.link : 6
+OK
+x0: 0, y0: 0
+x1: 0, y1: 1
+x2: 0, y2: 2
+x3: 0, y3: 3
+ok1
+letter :A
+ok2
+ok0
+ok
+var.link : 6
+OK
+x0: 0, y0: 0
+x1: 1, y1: 0
+x2: 2, y2: 0
+x3: 3, y3: 0
+ok1
+letter :B
+ok2
+ok0
+ok
+var.link : 6
+OK
+x0: 0, y0: 0
+x1: 1, y1: 0
+x2: 2, y2: 0
+x3: 2, y3: 1
+ok1
+letter :C
+ok2
+ok0
+ok
+var.link : 6
+OK
+x0: 1, y0: 0
+x1: 2, y1: 0
+x2: 0, y2: 1
+x3: 1, y3: 1
+ok1
+letter :D
+ok2
+ok0
+ok
+var.link : 8
+OK
+x0: 0, y0: 0
+x1: 1, y1: 0
+x2: 0, y2: 1
+x3: 1, y3: 1
+ok1
+letter :E
+ok2
+ok0
+ok
+var.link : 6
+OK
+x0: 0, y0: 0
+x1: 1, y1: 0
+x2: 1, y2: 1
+x3: 2, y3: 1
+ok1
+letter :F
+ok2
+ok0
+ok
+var.link : 6
+OK
+x0: 0, y0: 0
+x1: 1, y1: 0
+x2: 1, y2: 1
+x3: 1, y3: 2
+ok1
+letter :G
+ok2
+ok0
+ok
+var.link : 6
+OK
+x0: 0, y0: 0
+x1: 1, y1: 0
+x2: 2, y2: 0
+x3: 1, y3: 1
+ok1
+letter :H
+ok2
+ok0
+ok
+var.link : 4
+OK
+error
+x0: 2, y0: 0
+x1: 3, y1: 0
+x2: 0, y2: 1
+x3: 1, y3: 1
+ok1
+letter :I
+ok2

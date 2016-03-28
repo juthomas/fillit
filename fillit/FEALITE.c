@@ -6,7 +6,7 @@
 /*   By: zzeller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/13 16:09:34 by zzeller           #+#    #+#             */
-/*   Updated: 2016/03/26 16:09:25 by juthomas         ###   ########.fr       */
+/*   Updated: 2016/03/28 18:52:44 by juthomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,88 +54,47 @@ t_list	*ft_create_elem(void)
 t_var			valid_list(t_var var)
 {
 	int		i;
-	int		x;
-	int		y;
 	int		d;
-	short int	*deja;
+	int		dot;
+	int		end;
 
 	i = 0;
-	x = 0;
-	y = 0;
 	d = 0;
-	var.h = 1;
-	var.w = 1;
-	deja = (short int*)malloc(sizeof(short int) * 22);
+	dot = 0;
+	end = 0;
+	var.link = 0;
 	var.valid = 1;
-	while (i < 22)
-	{
-		var.tab[i] = -1;
-		i++;
-	}
-	i = 0;
 	while (var.tmp[i] != '\0')
 	{
-			ft_putstr("ok\n");
-		if (var.tmp[i] == '#' || var.tmp[i] == '.' || var.tmp[i] == '\n')
+		if (var.tmp[i] == '#')
 		{
-			if (var.tmp[i] == '#')
-			{
-				if (deja[i] == 1 && d == 3)
-					;
-				else if (var.tmp[i + 1] == '#' && var.tab[i + 1] == -1
-						&& (i + 1) % 5 != 4)
-				{
-					deja[i + 1] = 1;
-					var.tab[i + 1] = i;
-					var.tab[i] = i + 1;
-					var.w++;
-				}
-				else if (var.tmp[i - 5] == '#' && var.tab[i - 5] == -1
-						&& (i >= 0))
-				{
-					deja[i - 5] = 1;
-					var.tab[i - 5] = i;
-					var.tab[i] = i - 5;
-					var.h++;
-				}
-				else if (var.tmp[i - 1] == '#' && var.tab[i - 1] == -1
-						&& (i - 1) % 5 != -1)
-				{
-					deja[i - 1] = 1;
-					var.tab[i - 1] = i;
-					var.tab[i] = i - 1;
-					var.w++;
-				}
-				else if (var.tmp[i + 5] == '#' && var.tab[i + 5] == -1
-						&& (i + 5) / 5 != 4)
-				{
-					deja[i + 5] = 1;
-					var.tab[i + 5] = i;
-					var.tab[i] = i + 5;
-					var.h++;
-				}
-				else
-					var.valid = 0;
-				d++;
-			}
-			else if (var.tmp[i] == '\n')
-			{
-				if (i % 5 != 4)
-				{
-					if (i % 5 != 0 || i / 5 != 5)
-						var.valid = 0;
-				}
-				y++;
-				x = 0;
-			}
+			if (var.tmp[i + 1] == '#')
+				var.link++;
+			if (var.tmp[i - 1] == '#')
+				var.link++;
+			if (var.tmp[i + 5] == '#')
+				var.link++;
+			if (var.tmp[i - 5] == '#')
+				var.link++;
+			d++;
+		}
+		else if (var.tmp[i] == '\n')
+		{
+			if (i % 5 == 4 || i == 20)
+				end++;
 			else
-				x++;
-			if (d > 4)
 				var.valid = 0;
 		}
+		else if (var.tmp[i] == '.')
+			dot++;
+		else
+			var.valid = 0;
+		i++;
 	}
-	if (d != 4)
+	if (dot + d + end != 21 || d != 4 || end != 5 || var.link < 6)
 		var.valid = 0;
+	printf("var.link : %d\n", var.link);
+
 	return(var);
 }
 /*
@@ -330,14 +289,34 @@ t_var	fillist(char *tmp, t_var var)
 
 //	ou = y;
 	var.tmp = tmp;
-			ft_putstr("ok\n");
+			printf("ok\n");
 var = valid_list(var);
 
-		ft_putstr("ok\n");
-//	if (var.valid == 0)
-//		ERROR;
+		printf("OK\n");
+	if (var.valid == 0)
+		printf("error\n");
+	tmp = modifall(tmp);
 //	var = pick_num(var, tmp);
 	var.list = takexy(tmp);
+	int i = 0;
+	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i, var.list->yt[i] );
+	i++;
+	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i,var.list->yt[i] );
+	i++;
+	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i, var.list->yt[i] );
+	i++;
+	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i, var.list->yt[i] );
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	var.nbp++;
 	return (var);
 }
@@ -355,7 +334,7 @@ t_var	in_list(int argc, char **argv, t_var var)
 	short int	tru;
 	char		l;
 
-			ft_putstr("ok\n");
+			printf("ok\n");
 
 	tmp = (char *)malloc(sizeof(char) * 22);
 //	var = (t_var)malloc(sizeof(t_var));
@@ -363,22 +342,23 @@ t_var	in_list(int argc, char **argv, t_var var)
 	tmp[21] = '\0';
 	fd = open(argv[1], O_RDONLY);
 	tru = read(fd, tmp, 21);
-				ft_putstr("ok\n");
+				printf("ok\n");
 //	var.list = (var.list)malloc(sizeof(var.list));
 //	var.list = *var.beg;
-			ft_putstr("ok\n");
+			printf("ok\n");
 	while (tru && l <= 'Z')
 	{
-		ft_putstr("ok\n");
+		printf("ok0\n");
 		var = fillist(tmp, var);
 	
-			ft_putstr("ok\n");
+			printf("ok1\n");
 	var.list->l = l;
 		l++;
+		printf("letter :%c\n", l - 1);
 		tru = read(fd, tmp, 21);
 		var.list->next = ft_create_elem();
 		var.list = var.list->next;
-		printf("ok\n");
+		printf("ok2\n");
 	}
 	return (var);
 }
