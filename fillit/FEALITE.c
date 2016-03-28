@@ -6,7 +6,7 @@
 /*   By: zzeller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/13 16:09:34 by zzeller           #+#    #+#             */
-/*   Updated: 2016/03/28 18:52:44 by juthomas         ###   ########.fr       */
+/*   Updated: 2016/03/28 19:04:48 by juthomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,6 @@ t_list	*takexy(char *tab)
 
 t_var	fillist(char *tmp, t_var var)
 {
-
 //	ou = y;
 	var.tmp = tmp;
 			printf("ok\n");
@@ -297,7 +296,8 @@ var = valid_list(var);
 		printf("error\n");
 	tmp = modifall(tmp);
 //	var = pick_num(var, tmp);
-	var.list = takexy(tmp);
+//	var.list = takexy(tmp);
+	var.list = *var.beg;
 	int i = 0;
 	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i, var.list->yt[i] );
 	i++;
