@@ -89,3 +89,15 @@ x3: 1, y3: 1
 ok1
 letter :H
 ok2
+ok0
+ok
+var.link : 4
+OK
+error
+x0: 2, y0: 0
+x1: 3, y1: 0
+x2: 0, y2: 1
+x3: 1, y3: 1
+ok1
+letter :I
+ok2

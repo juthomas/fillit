@@ -6,7 +6,7 @@
 /*   By: zzeller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/13 16:09:34 by zzeller           #+#    #+#             */
-/*   Updated: 2016/03/28 19:04:48 by juthomas         ###   ########.fr       */
+/*   Updated: 2016/03/29 18:47:53 by juthomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,10 @@ void	ft_list_push_back(t_list **begin_list, t_var var)
 	{
 		while (list->next)
 			list = list->next;
-		list->next = ft_create_elem();
+		list->next = takexy(var.tmp);
 	}
 	else
-		*begin_list = ft_create_elem();
-}
-
-t_list	*ft_create_elem(void)
-{
-	t_list		*tmp;
-
-	tmp = malloc(sizeof(t_list));
-	if (tmp)
-	{
-		tmp->next = NULL;
-	}
-	return (tmp);
+		*begin_list = takexy(var.tmp);
 }
 
 t_var			valid_list(t_var var)
@@ -96,53 +84,6 @@ t_var			valid_list(t_var var)
 	printf("var.link : %d\n", var.link);
 
 	return(var);
-}
-/*
-t_var	pick_num(t_var var, char tmp[22])
-{
-	short unsigned int	i;
-	short unsigned int	x;
-	short unsigned int	y;
-	short unsigned int	tetrinu;
-
-	tetrinu = 0;
-	x = 0;
-	y = 0;
-	i = 0;
-	while (i < 22)
-	{
-		if (tmp[i] == '#')
-		{
-			var.tmpx[tetrinu] = x;
-			var.tmpy[tetrinu++] = y;
-		}
-		if (tmp[i] == '\n')
-		{
-			y++;
-			x = 0;
-		}
-		else
-			x++;
-		i++;
-	}
-	return (var);
-}
-*/
-t_var	epur(t_var var)
-{
-	short int	i;
-	short int	d;
-
-	i = 0;
-	d = 4;
-	while (i < 21)
-	{
-		while (d != 0)
-		{
-		
-		}
-	}
-	return (var);
 }
 
 char	*modiftabcolumn(char *tab)
@@ -238,14 +179,7 @@ char *modifall(char *tab)
 		}
 		i++;
 	}
-
-
-
-	
-
-
 	return (tab);
-
 }
 
 t_list	*takexy(char *tab)
@@ -280,24 +214,22 @@ t_list	*takexy(char *tab)
 		x++;
 		i++;
 	}
+	if (list)
+		list->next = NULL;
 	return (list);
 }
 
 
 t_var	fillist(char *tmp, t_var var)
 {
-//	ou = y;
 	var.tmp = tmp;
-			printf("ok\n");
-var = valid_list(var);
-
-		printf("OK\n");
+	printf("ok\n");
+	var = valid_list(var);
+	printf("OK\n");
 	if (var.valid == 0)
 		printf("error\n");
 	tmp = modifall(tmp);
-//	var = pick_num(var, tmp);
-//	var.list = takexy(tmp);
-	var.list = *var.beg;
+	var.list = takexy(tmp);
 	int i = 0;
 	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i, var.list->yt[i] );
 	i++;
@@ -306,26 +238,9 @@ var = valid_list(var);
 	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i, var.list->yt[i] );
 	i++;
 	printf("x%d: %d, y%d: %d\n", i, var.list->xt[i], i, var.list->yt[i] );
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	var.nbp++;
 	return (var);
 }
-
-
-
-
-
-
 
 t_var	in_list(int argc, char **argv, t_var var)
 {
@@ -333,31 +248,32 @@ t_var	in_list(int argc, char **argv, t_var var)
 	char		*tmp;
 	short int	tru;
 	char		l;
+	int			stop;
 
+	stop = 1;
+	var.list = NULL;
 			printf("ok\n");
-
 	tmp = (char *)malloc(sizeof(char) * 22);
-//	var = (t_var)malloc(sizeof(t_var));
 	l = 'A';
 	tmp[21] = '\0';
 	fd = open(argv[1], O_RDONLY);
 	tru = read(fd, tmp, 21);
-				printf("ok\n");
-//	var.list = (var.list)malloc(sizeof(var.list));
-//	var.list = *var.beg;
-			printf("ok\n");
+	printf("ok\n");
+	printf("ok\n");
 	while (tru && l <= 'Z')
 	{
 		printf("ok0\n");
 		var = fillist(tmp, var);
-	
-			printf("ok1\n");
-	var.list->l = l;
+		if (stop == 1)
+		{
+			var.beg = var.list;
+			stop = 0;
+		}
+		printf("ok1\n");
+		var.list->l = l;
 		l++;
 		printf("letter :%c\n", l - 1);
 		tru = read(fd, tmp, 21);
-		var.list->next = ft_create_elem();
-		var.list = var.list->next;
 		printf("ok2\n");
 	}
 	return (var);
@@ -366,13 +282,12 @@ t_var	in_list(int argc, char **argv, t_var var)
 int		main(int argc, char **argv)
 {
 	t_var	var;
+	t_list *re;
 
 	var = in_list(argc, argv, var);
-
-
-
-
-
+	re = var.beg;
+	printf("%d", re->xt[0]);
+	re = var.beg->next;
+//	printf("%d", re->xt[0]);
+//	printf("%d", re->next->next->xt[0]);
 }
-
-
