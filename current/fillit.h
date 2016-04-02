@@ -14,18 +14,14 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-/*
-typedef struct		s_liste
-{
-	t_list			*beg;
-}					t_liste;
-*/
-
 typedef struct		s_var
 {
 	short			link;
 	short			valid;
 	short			nbp;
+	short			size;
+	short			solovarmax;
+	short			solovar;
 	t_list			*begin;
 }					t_var;
 
