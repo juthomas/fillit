@@ -24,7 +24,7 @@ SRC = fillit.c	\
 
 OBJ = fillit.o	\
 	  list.o	\
-	  errors.c	\
+	  errors.o	\
 	  \
 	  \
 
@@ -35,7 +35,7 @@ all:
 	gcc -Wall -Werror -Wextra $(OBJ) -o $(NAME)
 
 clean:
-	rm -f *.o
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)

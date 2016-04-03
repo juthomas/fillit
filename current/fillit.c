@@ -43,11 +43,6 @@ void	putmap(char *map, short solovarmax)
 
 		i++;
 	}
-
-
-
-
-
 }
 
 short	place(short solovarmax, short i, t_list *list, char *map)
@@ -57,13 +52,14 @@ short	place(short solovarmax, short i, t_list *list, char *map)
 
 	u = 0;
 	x = root(solovarmax);
+	printf("x: %d\n",x);
 	while (u < 4)
 	{
-		if (map[(i % x + list->x[u]) + (list->y[u] * x + i / x)] != '.')
+		if (map[(i % x + list->x[u]) + (list->y[u] * x + i / x * x)] != '.')
 			return(0);
-		if (i % x + list->x[u] > x)
+		if (i % x + list->x[u] >= x)
 			return (0);
-		if (i / x + list->y[u] > x)
+		if (i / x + list->y[u] >= x)
 			return (0);
 		u++;
 	}
@@ -79,28 +75,47 @@ char	*printmap(char *map, t_list *list, short solovarmax, int i)
 	u = 0;
 	while (u < 4)
 	{
-		map[(i % x + list->x[u]) + (list->y[u] * x + i / x)] = list->l;
+		map[(i % x + list->x[u]) + (list->y[u] * x + i / x * x)] = list->l;
 		u++;
 	}
-
-
 	return (map);
 }
 
+char	*rmtetri(char *map, t_list *list, short solovarmax, int i)
+{
+	short	u;
+	short	x;
+
+	x = root(solovarmax);
+	u = 0;
+	while (u < 4)
+	{
+		map[(i % x + list->x[u]) + (list->y[u] * x + i / x * x)] = '.';
+		u++;
+	}
+	return (map);
+}
+
+
 short	recusivpowa(t_list *list, short solovarmax, short i, char *map)
 {
-	putmap(map, solovarmax);
+//	putmap(map, solovarmax);
 	while (i < solovarmax)
 	{
-		if (!list)
-		{
-			putmap(map, solovarmax);
-			return (1);
-		}
+	//	putmap(map, solovarmax);
+	//	getchar();
 		if (place(solovarmax, i, list, map) == 1)
 		{
 			map = printmap(map, list, solovarmax, i);
-			recusivpowa(list->next, solovarmax, 0, map);
+			if (list->next == NULL)
+			{
+			putmap(map, solovarmax);
+			return (1);
+			}
+			if (recusivpowa(list->next, solovarmax, 0, map) == 1)
+				return (1);
+			else
+				map = rmtetri(map, list, solovarmax, i);
 		}
 		i++;
 	}
@@ -158,7 +173,6 @@ void	testeur_de_liste(t_var var)
 	while (list)
 	{
 		printf("\nletter : %c\n", list->l);
-
 		printf("piece : \n");
 		while (k < 16)
 		{
@@ -179,7 +193,7 @@ void	testeur_de_liste(t_var var)
 	}
 	printf("\n\n\nre\n\n");
 	list = var.begin;
-	while (list)
+	while (list != NULL)
 	{
 		printf("\nletter : %c\n", list->l);
 
@@ -237,21 +251,19 @@ t_var	ft_read(char **argv, t_var var)
 		}
 		var = valid(var, buf);
 		if (var.valid == 0)
-			printf("ERROR\n");
+			write(1, "error\n", 6);
 		if (fst)
 			list = fillist(buf, l);
 		else
 		{
 			list->next = fillist(buf, l);
 			list = list->next;
-
 		}
 		if (fst)
 		{
 			fst = 0;
 			var.begin = list;
 		}
-
 	}
 	if (end == 0)
 		return (var);
@@ -271,5 +283,7 @@ int		main(int argc, char **argv)
 	{
 		var = ft_read(argv, var);
 	}
+	else
+		write(1, "usage: ./fillit file\n", 21);
 	return (0);
 }
